@@ -1,0 +1,33 @@
+name: SK Hynix strategy backtest
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'analysis/backtest.py'
+      - '.github/workflows/backtest.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  backtest:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install dependencies
+        run: pip install --disable-pip-version-check pandas numpy requests yfinance
+      - name: Run backtest
+        run: python analysis/backtest.py
+      - name: Upload results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: skhynix-backtest-results
+          path: analysis/output
+          if-no-files-found: warn
