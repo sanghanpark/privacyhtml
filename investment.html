@@ -1,0 +1,280 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="robots" content="noindex,nofollow,noarchive" />
+<title>SK하이닉스 수량증가 전략 · 외부 투자위원 대시보드</title>
+<style>
+:root{
+  --bg:#f3f5f8; --card:#ffffff; --ink:#172033; --muted:#687386;
+  --line:#dfe5ee; --blue:#1f5eff; --blue2:#eaf0ff; --green:#137a57;
+  --green2:#e9f8f1; --amber:#9a5b00; --amber2:#fff5df; --red:#b42318;
+  --red2:#fff0ee; --nav:#111827; --shadow:0 10px 28px rgba(16,24,40,.08);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans KR",Arial,sans-serif;line-height:1.55}
+header{background:linear-gradient(135deg,#111827,#1f3b78);color:white;padding:28px 22px 26px;position:sticky;top:0;z-index:20;box-shadow:0 6px 18px rgba(0,0,0,.15)}
+.header-inner{max-width:1180px;margin:auto;display:flex;gap:18px;align-items:center;justify-content:space-between}
+h1{font-size:clamp(21px,3vw,34px);margin:0 0 7px;letter-spacing:-.04em}
+.subtitle{margin:0;color:#dbe5ff;font-size:14px}
+.badge{display:inline-flex;align-items:center;gap:8px;padding:8px 12px;border-radius:999px;background:rgba(255,255,255,.12);font-size:13px;white-space:nowrap}
+.dot{width:9px;height:9px;background:#63e6be;border-radius:50%;box-shadow:0 0 0 5px rgba(99,230,190,.15)}
+nav{background:#fff;border-bottom:1px solid var(--line);position:sticky;top:106px;z-index:19;overflow:auto}
+nav .nav-inner{max-width:1180px;margin:auto;display:flex;gap:6px;padding:9px 16px}
+nav a{color:#4c576a;text-decoration:none;padding:8px 11px;border-radius:8px;font-size:13px;font-weight:650;white-space:nowrap}
+nav a:hover{background:var(--blue2);color:var(--blue)}
+main{max-width:1180px;margin:22px auto 70px;padding:0 16px}
+.grid{display:grid;grid-template-columns:repeat(12,1fr);gap:16px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:20px;box-shadow:var(--shadow)}
+.card h2{font-size:20px;margin:0 0 14px;letter-spacing:-.025em}
+.card h3{font-size:16px;margin:0 0 10px}
+.span-12{grid-column:span 12}.span-8{grid-column:span 8}.span-7{grid-column:span 7}.span-6{grid-column:span 6}.span-5{grid-column:span 5}.span-4{grid-column:span 4}.span-3{grid-column:span 3}
+.kpi{padding:18px;border-radius:14px;border:1px solid var(--line);background:#fbfcfe}
+.kpi .label{font-size:12px;color:var(--muted);font-weight:700;margin-bottom:5px}
+.kpi .value{font-size:26px;font-weight:850;letter-spacing:-.04em}
+.kpi .note{font-size:12px;color:var(--muted);margin-top:4px}
+.status{display:flex;gap:12px;align-items:flex-start;background:var(--amber2);border:1px solid #f1d28b;color:#6e4300;border-radius:14px;padding:16px}
+.status strong{font-size:17px}
+.icon{font-size:24px;line-height:1}
+.callout{padding:16px 18px;border-left:5px solid var(--blue);background:var(--blue2);border-radius:10px;font-weight:700}
+.callout.red{border-left-color:var(--red);background:var(--red2);color:#7f1d1d}
+.callout.green{border-left-color:var(--green);background:var(--green2);color:#0d5d42}
+table{width:100%;border-collapse:collapse;font-size:13px}
+th,td{padding:11px 10px;border-bottom:1px solid var(--line);vertical-align:top;text-align:left}
+th{background:#f7f9fc;color:#4a5568;font-size:12px;position:sticky;top:0}
+tr:last-child td{border-bottom:0}
+.score{font-weight:850}.better{color:var(--green)}.worse{color:var(--red)}
+.pill{display:inline-block;padding:4px 9px;border-radius:999px;font-size:12px;font-weight:800}
+.pill.blue{background:var(--blue2);color:var(--blue)}.pill.green{background:var(--green2);color:var(--green)}.pill.amber{background:var(--amber2);color:var(--amber)}.pill.red{background:var(--red2);color:var(--red)}
+.position{display:grid;grid-template-columns:110fr 10fr 5fr;height:56px;border-radius:12px;overflow:hidden;color:#fff;text-align:center;font-weight:850;font-size:12px}
+.position>div{display:flex;align-items:center;justify-content:center;padding:4px}.core{background:#1f5eff}.tactical{background:#f59e0b}.emergency{background:#dc2626}
+.checklist{display:grid;grid-template-columns:repeat(5,1fr);gap:9px}
+.check{border:1px solid var(--line);border-radius:12px;padding:12px;background:#fbfcfe;min-height:108px}
+.check .num{font-size:21px;font-weight:900;color:var(--blue)}.check b{font-size:13px}.check p{font-size:12px;color:var(--muted);margin:5px 0 0}
+.rule-list{display:grid;gap:9px}.rule{display:flex;gap:10px;align-items:flex-start;border:1px solid var(--line);border-radius:11px;padding:12px}.rule-no{min-width:26px;height:26px;border-radius:50%;display:grid;place-items:center;background:var(--nav);color:#fff;font-weight:800;font-size:12px}.rule p{margin:1px 0 0;font-size:13px}
+.form-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}.field label{display:block;font-size:12px;font-weight:800;color:#566174;margin-bottom:6px}.field input,.field select{width:100%;padding:10px;border:1px solid #cfd7e4;border-radius:9px;font-size:14px;background:#fff}.calc-result{margin-top:15px;display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.result-box{background:#111827;color:#fff;border-radius:12px;padding:14px}.result-box span{display:block;color:#c8d3e8;font-size:11px}.result-box strong{font-size:22px}
+.action{border-radius:14px;padding:16px;border:2px solid #ccd5e4;background:#fff}.action-title{display:flex;justify-content:space-between;gap:12px;align-items:center;margin-bottom:10px}.action h3{margin:0;font-size:18px}.action .decision{font-weight:900;color:var(--blue)}
+.timeline{position:relative;padding-left:26px}.timeline:before{content:"";position:absolute;left:8px;top:8px;bottom:8px;width:2px;background:#d7dfeb}.event{position:relative;margin-bottom:16px}.event:before{content:"";position:absolute;left:-23px;top:5px;width:12px;height:12px;border-radius:50%;background:var(--blue);border:3px solid #eaf0ff}.event b{font-size:13px}.event p{margin:3px 0;color:var(--muted);font-size:12px}
+.small{font-size:12px;color:var(--muted)}
+.footer-note{margin-top:20px;padding:14px;border-radius:10px;background:#eef2f7;color:#576273;font-size:12px}
+button{border:0;background:var(--blue);color:white;border-radius:9px;padding:10px 14px;font-weight:800;cursor:pointer}button.secondary{background:#e9eef7;color:#344054}
+@media(max-width:900px){header{position:static}nav{top:0}.span-8,.span-7,.span-6,.span-5,.span-4,.span-3{grid-column:span 12}.checklist{grid-template-columns:1fr 1fr}.form-grid{grid-template-columns:1fr 1fr}.calc-result{grid-template-columns:1fr}.header-inner{align-items:flex-start;flex-direction:column}.badge{white-space:normal}}
+@media(max-width:560px){.checklist,.form-grid{grid-template-columns:1fr}.position{grid-template-columns:1fr;height:auto}.position>div{padding:10px}th,td{padding:9px 7px}.card{padding:16px}}
+@media print{header,nav,button{display:none}body{background:white}.card{box-shadow:none;break-inside:avoid}main{max-width:none}}
+</style>
+</head>
+<body>
+<header>
+  <div class="header-inner">
+    <div>
+      <h1>SK하이닉스 수량증가 전략</h1>
+      <p class="subtitle">주도주 집중투자를 이해하되 사용자와 이해관계가 분리된 ‘외부 투자위원’ 관점</p>
+    </div>
+    <div class="badge"><span class="dot"></span> 평일 종가 후 16:10 점검 · 기준일 2026-07-31</div>
+  </div>
+</header>
+<nav><div class="nav-inner">
+  <a href="#summary">요약</a><a href="#metrics">성공지표</a><a href="#position">포지션</a><a href="#sell">매도조건</a><a href="#reentry">재매수</a><a href="#calculator">계산기</a><a href="#daily">매일 점검</a><a href="#rotation">마벨 전환</a>
+</div></nav>
+<main>
+<section id="summary" class="grid">
+  <div class="card span-12">
+    <div class="status"><div class="icon">⚠️</div><div><strong>현재 판정: 속도과열이지만 자동 매도 신호는 아님</strong><div>하루 약 +30%는 추격매수를 중단할 이유입니다. 최근 고점·중기 이평선 위치까지 확인되지 않은 상태에서는 전술매도 조건으로 단독 사용하지 않습니다.</div></div></div>
+  </div>
+  <div class="kpi span-3"><div class="label">실제 보유수량</div><div class="value">125주</div><div class="note">20주 매도 후 기준</div></div>
+  <div class="kpi span-3"><div class="label">월요일 상환 후 예상 대출</div><div class="value">7,372만</div><div class="note">매도대금 2,628만 원 추정</div></div>
+  <div class="kpi span-3"><div class="label">현재 순경제수량</div><div class="value" id="topNetShares">84.95주</div><div class="note">주식 + 현금/주가 − 대출/주가</div></div>
+  <div class="kpi span-3"><div class="label">전술운용 한도</div><div class="value">10주</div><div class="note">5주 + 추가 5주</div></div>
+
+  <div class="card span-7">
+    <h2>외부 평가 결론</h2>
+    <div class="callout red">방향은 맞지만, 주도주를 반복 매도해 수량을 늘리는 전략은 난도가 높습니다. 핵심은 고점을 맞히는 것이 아니라 매도하지 않아야 할 때 아무것도 하지 않는 것입니다.</div>
+    <div style="overflow:auto;margin-top:14px"><table>
+      <thead><tr><th>평가항목</th><th>기존 전략</th><th>수정 전략</th><th>외부 평가</th></tr></thead>
+      <tbody>
+        <tr><td>목표와의 일치</td><td class="score">8/10</td><td class="score better">9/10</td><td>단순 수량이 아니라 순경제수량까지 평가</td></tr>
+        <tr><td>주식수 증가 가능성</td><td class="score">5/10</td><td class="score better">7/10</td><td>10주를 합쳐 11주 이상 재매수할 때만 실행</td></tr>
+        <tr><td>재진입 실패 방어</td><td class="score worse">3/10</td><td class="score better">7/10</td><td>핵심 110주로 상승 참여 유지</td></tr>
+        <tr><td>거래비용 효율</td><td class="score">4/10</td><td class="score better">7/10</td><td>소액 왕복매매 억제</td></tr>
+        <tr><td>심리적 실행 가능성</td><td class="score worse">2/10</td><td class="score better">7/10</td><td>종가 후 하루 한 번만 공식 판단</td></tr>
+        <tr><td>대출 위험 관리</td><td class="score">4/10</td><td class="score better">8/10</td><td>재대출을 전략에서 제외</td></tr>
+        <tr><td><b>종합</b></td><td class="score">4.3/10</td><td class="score better">7.5/10</td><td>제한적 전술매매 + 비주도주 전환 병행</td></tr>
+      </tbody>
+    </table></div>
+  </div>
+  <div class="card span-5">
+    <h2>최종 운영안</h2>
+    <div class="timeline">
+      <div class="event"><b>월요일</b><p>20주 매도대금을 계획대로 대출 상환</p></div>
+      <div class="event"><b>평일 매일 16:10</b><p>종가 기준 외부 투자위원 점검</p></div>
+      <div class="event"><b>실제 매매</b><p>조건 충족 때만 5주씩, 최대 10주</p></div>
+      <div class="event"><b>재매수</b><p>비용 반영 후 최소 1주 이상 늘릴 수 있을 때</p></div>
+      <div class="event"><b>매월 마지막 거래일</b><p>SK하이닉스와 마벨 상대매력 비교</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="metrics" class="grid" style="margin-top:16px">
+  <div class="card span-12">
+    <h2>성공판정은 세 지표가 함께 개선될 때만</h2>
+    <div class="checklist">
+      <div class="check"><div class="num">①</div><b>순경제수량</b><p>보유주식수 + 현금/주가 − 대출/주가</p></div>
+      <div class="check"><div class="num">②</div><b>순금융자산</b><p>모든 금융자산에서 대출을 차감</p></div>
+      <div class="check"><div class="num">③</div><b>실제 보유수량</b><p>증권계좌에 표시되는 SK하이닉스 수량</p></div>
+      <div class="check"><div class="num">④</div><b>대출잔액</b><p>수량을 늘리더라도 대출이 다시 늘면 실패</p></div>
+      <div class="check"><div class="num">⑤</div><b>거래 후 현금</b><p>추격매수로 현금만 줄지 않았는지 확인</p></div>
+    </div>
+    <div class="callout green" style="margin-top:14px">주식수가 늘어도 순자산이 줄거나 대출이 증가하면 성공으로 기록하지 않습니다.</div>
+  </div>
+</section>
+
+<section id="position" class="grid" style="margin-top:16px">
+  <div class="card span-12">
+    <h2>125주 포지션 구분</h2>
+    <div class="position" aria-label="핵심 110주, 전술 10주, 비상 5주"><div class="core">핵심 110주</div><div class="tactical">전술 10주</div><div class="emergency">비상 5주</div></div>
+    <div style="overflow:auto;margin-top:14px"><table>
+      <thead><tr><th>구분</th><th>수량</th><th>역할</th><th>매도 가능 조건</th></tr></thead>
+      <tbody>
+        <tr><td><span class="pill blue">핵심</span></td><td><b>110주</b></td><td>산업과 기업의 장기 상승에 참여</td><td>HBM 경쟁력·점유율·고객 Thesis 훼손</td></tr>
+        <tr><td><span class="pill amber">전술</span></td><td><b>10주</b></td><td>과열 매도 후 더 많은 수량으로 재진입 시도</td><td>아래 5개 조건 중 4개 이상</td></tr>
+        <tr><td><span class="pill red">비상</span></td><td><b>5주</b></td><td>강제매도 및 생활재무 위험 방어</td><td>담보·시장구조 불안 시에만</td></tr>
+      </tbody>
+    </table></div>
+    <p class="small">전술매매로 순경제수량이 연속 3회 증가하기 전에는 전술물량을 15주로 확대하지 않습니다.</p>
+  </div>
+</section>
+
+<section id="sell" class="grid" style="margin-top:16px">
+  <div class="card span-8">
+    <h2>전술 5주 매도 조건: 5개 중 4개 이상</h2>
+    <div class="rule-list">
+      <div class="rule"><div class="rule-no">1</div><p><b>단기 누적상승:</b> 최근 5거래일 +25% 이상</p></div>
+      <div class="rule"><div class="rule-no">2</div><p><b>가격 위치:</b> 최근 고점 돌파 또는 고점에서 3% 이내</p></div>
+      <div class="rule"><div class="rule-no">3</div><p><b>이평선 이격:</b> 20일선 대비 +15% 이상</p></div>
+      <div class="rule"><div class="rule-no">4</div><p><b>거래량:</b> 당일 거래량이 20일 평균의 2배 이상</p></div>
+      <div class="rule"><div class="rule-no">5</div><p><b>실적 괴리:</b> 주가 상승이 EPS 전망 상향보다 15%포인트 이상 빠름</p></div>
+    </div>
+  </div>
+  <div class="card span-4">
+    <h2>판정</h2>
+    <div class="action">
+      <div class="action-title"><h3>현재</h3><span class="pill amber">속도과열</span></div>
+      <div class="decision">추격매수 금지 · 보유 유지</div>
+      <p class="small">하루 +30%만으로는 자동 매도하지 않습니다. 첫 5주 매도 후에도 과열조건이 유지되고 추가 상승할 때만 두 번째 5주를 검토합니다.</p>
+    </div>
+    <div class="callout" style="margin-top:12px">최대 전술매도는 10주입니다.</div>
+  </div>
+</section>
+
+<section id="reentry" class="grid" style="margin-top:16px">
+  <div class="card span-7">
+    <h2>재매수: 네 조건을 모두 충족</h2>
+    <div class="rule-list">
+      <div class="rule"><div class="rule-no">1</div><p>비용 반영 후 기존보다 <b>최소 1주 이상</b> 더 살 수 있음</p></div>
+      <div class="rule"><div class="rule-no">2</div><p>평균 매도가보다 <b>약 10% 이상</b> 낮음</p></div>
+      <div class="rule"><div class="rule-no">3</div><p>20일선 또는 60일선 부근에서 <b>2거래일 이상</b> 가격 안정</p></div>
+      <div class="rule"><div class="rule-no">4</div><p>EPS·영업이익·HBM 수요 전망이 매도 당시보다 악화되지 않음</p></div>
+    </div>
+  </div>
+  <div class="card span-5">
+    <h2>재진입 실패 규칙</h2>
+    <div style="overflow:auto"><table>
+      <thead><tr><th>상황</th><th>행동</th></tr></thead>
+      <tbody>
+        <tr><td>매도가 대비 +5%</td><td>아무 행동 없음</td></tr>
+        <tr><td>+8%가 2일 유지</td><td>매도 판단 실패 인정, 추격매수 금지</td></tr>
+        <tr><td>실적 전망도 상향</td><td>다음 조정까지 현금 유지</td></tr>
+        <tr><td>핵심물량</td><td>110주로 상승 참여 유지</td></tr>
+      </tbody>
+    </table></div>
+    <div class="callout red" style="margin-top:12px">10주를 팔고 더 비싼 가격에 10주를 되사는 행동은 금지합니다.</div>
+  </div>
+</section>
+
+<section id="calculator" class="grid" style="margin-top:16px">
+  <div class="card span-12">
+    <h2>순경제수량·재매수 계산기</h2>
+    <p class="small">입력값은 브라우저에만 저장됩니다. 종가 후 실제 잔액으로 수정해 사용하십시오.</p>
+    <div class="form-grid">
+      <div class="field"><label>현재 SK하이닉스 주가(원)</label><input id="price" type="number" value="1718000" step="1000"></div>
+      <div class="field"><label>실제 보유수량(주)</label><input id="shares" type="number" value="125" step="1"></div>
+      <div class="field"><label>현금·예수금(원)</label><input id="cash" type="number" value="4905902" step="10000"></div>
+      <div class="field"><label>월요일 상환 후 대출(원)</label><input id="loan" type="number" value="73720000" step="10000"></div>
+      <div class="field"><label>전술 매도수량</label><select id="sellQty"><option value="5">5주</option><option value="10" selected>10주</option></select></div>
+      <div class="field"><label>평균 전술 매도가(원)</label><input id="sellPrice" type="number" value="1900000" step="1000"></div>
+      <div class="field"><label>왕복비용 가정</label><input id="costRate" type="number" value="0.5" step="0.1"></div>
+      <div class="field"><label>목표 재매수수량</label><input id="targetBuyQty" type="number" value="11" step="1"></div>
+    </div>
+    <div class="calc-result">
+      <div class="result-box"><span>현재 순경제수량</span><strong id="netShares">84.95주</strong></div>
+      <div class="result-box"><span>목표수량 확보 가능한 최고 재매수가</span><strong id="maxBuyPrice">172.7만 원</strong></div>
+      <div class="result-box"><span>평균 매도가 대비 필요 하락률</span><strong id="neededDrop">9.1%</strong></div>
+    </div>
+    <div style="display:flex;gap:8px;margin-top:12px"><button id="saveBtn">입력값 저장</button><button class="secondary" id="resetBtn">기준값 복원</button></div>
+  </div>
+</section>
+
+<section id="daily" class="grid" style="margin-top:16px">
+  <div class="card span-12">
+    <h2>평일 종가 후 외부 투자위원 점검</h2>
+    <div style="overflow:auto"><table>
+      <thead><tr><th>점검</th><th>매일 확인</th><th>판정 목적</th></tr></thead>
+      <tbody>
+        <tr><td>가격</td><td>당일·5일·20일 수익률, 최근 고점 거리</td><td>속도와 위치를 분리</td></tr>
+        <tr><td>추세</td><td>20일선·60일선 이격도</td><td>단기 과열이 추세과열인지 확인</td></tr>
+        <tr><td>수급</td><td>거래량/20일 평균, 외국인·기관 수급</td><td>매수 주체 집중과 매물출회 확인</td></tr>
+        <tr><td>실적</td><td>EPS·영업이익 전망과 주가의 괴리</td><td>좋은 상승과 질 나쁜 상승 구분</td></tr>
+        <tr><td>시장구조</td><td>레버리지·신용·리밸런싱·ADR 괴리</td><td>기계적 수급 위험 확인</td></tr>
+        <tr><td>개인재무</td><td>담보비율·대출잔액·순경제수량</td><td>같은 종목이라도 개인 행동을 강화</td></tr>
+      </tbody>
+    </table></div>
+    <div class="callout" style="margin-top:14px">공식 매매 판단은 종가 기준 하루 한 번만 합니다. 데이터가 부족하면 ‘아무 행동 없음’으로 둡니다.</div>
+  </div>
+</section>
+
+<section id="rotation" class="grid" style="margin-top:16px">
+  <div class="card span-12">
+    <h2>매월 마지막 거래일: SK하이닉스 vs 마벨 전환 검토</h2>
+    <div style="overflow:auto"><table>
+      <thead><tr><th>비교항목</th><th>SK하이닉스</th><th>마벨</th><th>판정</th></tr></thead>
+      <tbody>
+        <tr><td>3개월 EPS 전망 변화</td><td>월말 입력</td><td>월말 입력</td><td rowspan="5"><b>SK하이닉스가 5개 중 4개 이상 우위</b><br>＋ 최근 고점 대비 15% 이상 조정일 때만<br>마벨 전술물량 25~50주 전환 검토</td></tr>
+        <tr><td>최근 3개월 상대수익률</td><td>월말 입력</td><td>월말 입력</td></tr>
+        <tr><td>핵심 고객 CAPEX 수혜</td><td>월말 입력</td><td>월말 입력</td></tr>
+        <tr><td>시장점유율 변화</td><td>월말 입력</td><td>월말 입력</td></tr>
+        <tr><td>밸류에이션 대비 성장률</td><td>월말 입력</td><td>월말 입력</td></tr>
+      </tbody>
+    </table></div>
+    <p class="small">주도주 자체를 반복해서 팔기보다 상대적으로 약해진 비주도주를 줄여 주도주를 유지하는 경로를 우선 검토합니다.</p>
+  </div>
+</section>
+
+<div class="footer-note">이 페이지는 2026-07-31 제공자료와 합의된 전략을 정리한 개인 의사결정 도구입니다. 실시간 시세가 자동으로 연결된 페이지가 아니며, 평일 종가 후 점검 결과와 실제 계좌 잔액으로 갱신해야 합니다.</div>
+</main>
+<script>
+const ids=['price','shares','cash','loan','sellQty','sellPrice','costRate','targetBuyQty'];
+const defaults={price:1718000,shares:125,cash:4905902,loan:73720000,sellQty:10,sellPrice:1900000,costRate:0.5,targetBuyQty:11};
+function n(id){return Number(document.getElementById(id).value)||0}
+function fmtWon(v){return (v/10000).toLocaleString('ko-KR',{maximumFractionDigits:1})+'만 원'}
+function update(){
+  const p=n('price'), s=n('shares'), c=n('cash'), l=n('loan');
+  const q=n('sellQty'), sp=n('sellPrice'), cost=n('costRate')/100, tq=n('targetBuyQty');
+  const net=s+(p?c/p:0)-(p?l/p:0);
+  const proceeds=q*sp*(1-cost);
+  const max= tq?proceeds/tq:0;
+  const drop=sp?1-max/sp:0;
+  document.getElementById('netShares').textContent=net.toFixed(2)+'주';
+  document.getElementById('topNetShares').textContent=net.toFixed(2)+'주';
+  document.getElementById('maxBuyPrice').textContent=fmtWon(max);
+  document.getElementById('neededDrop').textContent=(drop*100).toFixed(1)+'%';
+}
+ids.forEach(id=>document.getElementById(id).addEventListener('input',update));
+document.getElementById('saveBtn').onclick=()=>{ids.forEach(id=>localStorage.setItem('skh_'+id,document.getElementById(id).value));alert('입력값을 이 브라우저에 저장했습니다.');};
+document.getElementById('resetBtn').onclick=()=>{Object.entries(defaults).forEach(([k,v])=>{document.getElementById(k).value=v;localStorage.removeItem('skh_'+k)});update();};
+ids.forEach(id=>{const v=localStorage.getItem('skh_'+id);if(v!==null)document.getElementById(id).value=v});
+update();
+</script>
+</body>
+</html>
