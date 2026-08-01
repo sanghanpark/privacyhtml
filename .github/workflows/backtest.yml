@@ -9,7 +9,7 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: read
+  contents: write
 
 jobs:
   backtest:
@@ -24,6 +24,14 @@ jobs:
         run: pip install --disable-pip-version-check pandas numpy requests yfinance
       - name: Run backtest
         run: python analysis/backtest.py
+      - name: Commit validated results
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add analysis/output/results.json analysis/output/summary.csv
+          git diff --cached --quiet && exit 0
+          git commit -m "Update SK hynix backtest results"
+          git push
       - name: Upload results
         if: always()
         uses: actions/upload-artifact@v4
