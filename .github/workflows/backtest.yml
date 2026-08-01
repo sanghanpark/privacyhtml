@@ -6,6 +6,11 @@ on:
     paths:
       - 'analysis/backtest_v2.py'
       - '.github/workflows/backtest.yml'
+  pull_request:
+    branches: [main]
+    paths:
+      - 'analysis/backtest_v2.py'
+      - '.github/workflows/backtest.yml'
   workflow_dispatch:
 
 permissions:
@@ -25,6 +30,7 @@ jobs:
       - name: Run backtest
         run: python analysis/backtest_v2.py
       - name: Commit validated results
+        if: github.event_name == 'push'
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
