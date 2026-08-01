@@ -4,7 +4,7 @@ on:
   push:
     branches: [main]
     paths:
-      - 'analysis/backtest.py'
+      - 'analysis/backtest_v2.py'
       - '.github/workflows/backtest.yml'
   workflow_dispatch:
 
@@ -23,7 +23,7 @@ jobs:
       - name: Install dependencies
         run: pip install --disable-pip-version-check pandas numpy requests yfinance
       - name: Run backtest
-        run: python analysis/backtest.py
+        run: python analysis/backtest_v2.py
       - name: Commit validated results
         run: |
           git config user.name "github-actions[bot]"
